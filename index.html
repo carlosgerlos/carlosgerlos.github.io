@@ -169,17 +169,20 @@
             document.getElementById('btns').style.display = "none";
         }
 
-        function handleNo() {
-            // Humorous Sorrow State
-            document.getElementById('sky').style.background = "#222";
-            document.getElementById('meadow').style.filter = "grayscale(100%)";
-            document.getElementById('rain').style.display = "block";
-            document.getElementById('tree').style.display = "block";
-            document.getElementById('sorrow-item').style.display = "block";
-            document.getElementById('cat').style.background = "#555";
-            document.getElementById('msg').innerHTML = "End of the road...";
-            document.getElementById('btns').style.display = "none";
-        }
+function handleNo() {
+    // ... your existing code ...
+    document.getElementById('sky').style.background = "#222";
+    document.getElementById('meadow').style.filter = "grayscale(100%)";
+    document.getElementById('rain').style.display = "block";
+    document.getElementById('tree').style.display = "block";
+    document.getElementById('sorrow-item').style.display = "block";
+    document.getElementById('msg').innerHTML = "End of the road...";
+    document.getElementById('btns').style.display = "none";
+
+    // FIX FOR THE EARS:
+    document.getElementById('cat').style.background = "#555";
+    document.documentElement.style.setProperty('--cat-orange', '#555'); 
+}
     </script>
 </body>
 </html>

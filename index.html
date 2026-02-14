@@ -7,163 +7,120 @@
     <style>
         :root {
             --bg-color: #a8e6cf; 
-            --flower-red: #ff5252;
             --cat-orange: #ffb74d;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            background-color: var(--bg-color);
-            font-family: 'Courier New', Courier, monospace;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Courier New', monospace; }
+        
+        #sky { position: absolute; top: 0; width: 100%; height: 40vh; background: linear-gradient(to bottom, #87ceeb, #a8e6cf); transition: 2s; }
+        #meadow { position: absolute; bottom: 0; width: 100%; height: 75vh; background: linear-gradient(to bottom, #7bc67b 0%, #45a045 100%); transition: 2s; }
 
-        /* Sky Styling */
-        .sky {
-            position: absolute;
-            top: 0; width: 100%; height: 40vh;
-            background: linear-gradient(to bottom, #87ceeb, #a8e6cf);
-        }
+        /* Rain */
+        #rain { display: none; position: absolute; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 150; pointer-events: none; }
 
-        /* The Deep Meadow */
-        .meadow {
-            position: absolute;
-            bottom: 0; width: 100%; height: 75vh;
-            background: linear-gradient(to bottom, #7bc67b 0%, #45a045 100%);
-            overflow: hidden;
-        }
-
-        /* Prettier Message Box (Scalloped Border) */
+        /* The Card */
         .card {
-            position: absolute;
-            top: 15%; left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 40px;
-            text-align: center;
-            z-index: 200;
-            border: 6px solid #ff5252;
-            border-radius: 30px;
-            /* Creating a "bubbly" feel like your picture */
-            outline: 6px dashed white;
-            outline-offset: -15px;
-            box-shadow: 0 10px 0px rgba(0,0,0,0.1);
+            position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
+            background: white; padding: 40px; text-align: center; z-index: 200;
+            border: 6px solid #ff5252; border-radius: 30px; box-shadow: 0 10px 0px rgba(0,0,0,0.1);
         }
 
-        .card h1 {
-            color: #333;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
+        .btn-group { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+        button { border: none; padding: 12px 30px; font-size: 1.2rem; cursor: pointer; border-radius: 50px; }
+        #yesBtn { background: #ff5252; color: white; }
+        #noBtn { background: #999; color: white; }
 
-        button {
-            background: #ff5252; color: white;
-            border: none; padding: 12px 30px;
-            font-size: 1.5rem; cursor: pointer;
-            border-radius: 50px;
-            box-shadow: 0 5px 0px #a70000;
-            transition: 0.1s;
-        }
-
-        button:hover { transform: scale(1.05); }
-        button:active { transform: translateY(3px); box-shadow: 0 2px 0px #a70000; }
-
-        /* Simple Pixel Cat CSS */
+        /* The Cat */
         .cat {
-            position: absolute;
-            bottom: 15%; left: 50%;
-            transform: translateX(-50%);
-            width: 80px; height: 80px;
-            background: var(--cat-orange);
-            border-radius: 20px 20px 5px 5px;
-            z-index: 100;
-            border: 3px solid #333;
+            position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 80px; background: var(--cat-orange);
+            border-radius: 20px 20px 5px 5px; z-index: 100; border: 3px solid #333; transition: 1s;
         }
-        /* Ears */
         .cat::before {
-            content: '';
-            position: absolute; top: -15px; left: 0;
-            width: 0; height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 20px solid var(--cat-orange);
-            filter: drop-shadow(45px 0 0 var(--cat-orange));
+            content: ''; position: absolute; top: -15px; left: 0;
+            border-left: 15px solid transparent; border-right: 15px solid transparent;
+            border-bottom: 20px solid var(--cat-orange); filter: drop-shadow(45px 0 0 var(--cat-orange));
         }
-        /* Eyes & Face */
-        .face::after {
-            content: '• •';
-            position: absolute; top: 20px; left: 20px;
-            font-size: 30px; color: #333; letter-spacing: 5px;
+        .face::after { content: '• •'; position: absolute; top: 20px; left: 20px; font-size: 30px; color: #333; letter-spacing: 5px; }
+        
+        /* The Rope Symbolism (Humorous) */
+        #sorrow-item {
+            display: none; position: absolute; right: -20px; top: -10px;
+            width: 5px; height: 50px; background: #795548; border-radius: 5px;
         }
-
-        /* Flower Bouquet for Cat */
-        .bouquet {
-            position: absolute; top: 40px; left: 20px;
-            width: 40px; height: 40px;
-            background: #ff5252;
-            border-radius: 50%;
-            box-shadow: 10px -5px 0 yellow, -5px -5px 0 white;
-            z-index: 101;
+        #sorrow-item::after {
+            content: 'O'; position: absolute; bottom: -10px; left: -5px; color: #795548; font-weight: bold; font-size: 20px;
         }
 
-        /* Pixel Flowers */
-        .flower {
-            position: absolute; width: 15px; height: 30px;
-            transform-origin: bottom center;
-            animation: sway 3s ease-in-out infinite;
+        /* The Tree */
+        #tree {
+            display: none; position: absolute; bottom: 15%; left: 35%;
+            width: 40px; height: 150px; background: #5d4037; z-index: 90;
         }
-        .stem { width: 3px; height: 100%; background: #2e7d32; margin: 0 auto; }
-        .petals {
-            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-            width: 12px; height: 12px; background: var(--flower-red);
-            box-shadow: 0 -5px 0 -1px var(--flower-red), 5px 0 0 -1px var(--flower-red), -5px 0 0 -1px var(--flower-red), 0 5px 0 -1px var(--flower-red);
+        #tree::after {
+            content: ''; position: absolute; top: -50px; left: -60px;
+            width: 160px; height: 100px; background: #2e7d32; border-radius: 50%;
         }
 
-        @keyframes sway {
-            0%, 100% { transform: rotate(-3deg); }
-            50% { transform: rotate(4deg); }
-        }
+        .flower { position: absolute; width: 15px; height: 30px; transform-origin: bottom center; animation: sway 3s infinite; }
+        @keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(4deg); } }
     </style>
 </head>
 <body>
 
-    <div class="sky"></div>
+    <div id="sky"></div>
+    <div id="rain"></div>
 
-    <div class="card">
-        <h1>Will you be my Valentine?</h1>
-        <button onclick="alert('❤️ She said yes! ❤️')">YES!</button>
+    <div class="card" id="mainCard">
+        <h1 id="msg">Will you be my Valentine?</h1>
+        <div class="btn-group" id="btns">
+            <button id="yesBtn" onclick="handleYes()">YES!</button>
+            <button id="noBtn" onclick="handleNo()">No</button>
+        </div>
     </div>
 
     <div class="meadow" id="meadow"></div>
 
-    <div class="cat">
+    <div id="tree"></div>
+    <div class="cat" id="cat">
         <div class="face"></div>
-        <div class="bouquet"></div>
+        <div id="sorrow-item"></div>
     </div>
+
+    <audio id="romanticMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         const meadow = document.getElementById('meadow');
-        const flowerCount = 200; // Tons of flowers!
-
-        for (let i = 0; i < flowerCount; i++) {
+        
+        // Generate Flowers
+        for (let i = 0; i < 100; i++) {
             const flower = document.createElement('div');
             flower.className = 'flower';
-            const leftPos = Math.random() * 100;
-            const bottomPos = Math.random() * 100;
-            const size = 0.4 + (bottomPos / 100);
-
-            flower.style.left = `${leftPos}%`;
-            flower.style.bottom = `${bottomPos}%`;
-            flower.style.animationDelay = `-${Math.random() * 5}s`;
-            flower.style.zIndex = Math.floor(bottomPos);
-            flower.style.transform = `scale(${size})`;
-            
-            const colors = ['#ff5252', '#ff4081', '#ffffff', '#ffeb3b', '#ff9800'];
-            flower.style.setProperty('--flower-red', colors[Math.floor(Math.random() * colors.length)]);
-
-            flower.innerHTML = `<div class="petals"></div><div class="stem"></div>`;
+            flower.style.left = Math.random() * 100 + '%';
+            flower.style.bottom = Math.random() * 100 + '%';
+            flower.innerHTML = `<div style="width:3px;height:100%;background:#2e7d32;margin:0 auto;"></div>
+                                <div style="position:absolute;top:-10px;left:2px;width:12px;height:12px;background:#ff5252;border-radius:50%"></div>`;
             meadow.appendChild(flower);
+        }
+
+        function handleYes() {
+            document.getElementById('msg').innerHTML = "YAY! ❤️ Happy Valentine's!";
+            document.getElementById('romanticMusic').play();
+            document.getElementById('btns').style.display = "none";
+        }
+
+        function handleNo() {
+            // Humorous Sorrow State
+            document.getElementById('sky').style.background = "#222";
+            document.getElementById('meadow').style.filter = "grayscale(100%)";
+            document.getElementById('rain').style.display = "block";
+            document.getElementById('tree').style.display = "block";
+            document.getElementById('sorrow-item').style.display = "block";
+            document.getElementById('cat').style.background = "#555";
+            document.getElementById('msg').innerHTML = "End of the road...";
+            document.getElementById('btns').style.display = "none";
         }
     </script>
 </body>

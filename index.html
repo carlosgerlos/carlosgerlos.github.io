@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-color: #a8e6cf; 
-            --cat-color: #ffb74d; /* Using a variable for easy JS switching */
+            --cat-color: #ffb74d; 
         }
 
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Courier New', monospace; }
@@ -15,10 +15,8 @@
         #sky { position: absolute; top: 0; width: 100%; height: 40vh; background: linear-gradient(to bottom, #87ceeb, #a8e6cf); transition: 2s; }
         #meadow { position: absolute; bottom: 0; width: 100%; height: 75vh; background: linear-gradient(to bottom, #7bc67b 0%, #45a045 100%); transition: 2s; }
 
-        /* Rain */
         #rain { display: none; position: absolute; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 150; pointer-events: none; }
 
-        /* The Card */
         .card {
             position: absolute; top: 15%; left: 50%; transform: translateX(-50%);
             background: white; padding: 40px; text-align: center; z-index: 200;
@@ -58,39 +56,53 @@
         .cat::before { left: 5px; transform: rotate(-10deg); }
         .cat::after { right: 5px; transform: rotate(10deg); }
 
-        /* Face Container */
-        #face-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            color: #333;
-        }
+        #face-content { position: relative; width: 100%; height: 100%; text-align: center; color: #333; }
         .eyes { position: absolute; top: 20px; width: 100%; font-size: 30px; font-weight: bold; }
         .mouth { position: absolute; top: 35px; width: 100%; font-size: 20px; }
 
-        /* The Broken Rope */
+        /* THE ROPE LOOP */
         #sorrow-item {
-            display: none; position: absolute; right: -40px; top: -60px;
-            width: 8px; height: 40px; background: #795548; border-radius: 5px;
-            transform: rotate(15deg);
+            display: none; 
+            position: absolute; 
+            right: -25px; /* Positioned relative to the cat */
+            top: -110px;  /* Hangs down from above */
+            width: 6px; 
+            height: 100px; 
+            background: #795548; 
+            border-radius: 5px;
+            z-index: 95;
         }
         #sorrow-item::after {
-            content: 'U'; /* Broken loop looks like a U */
-            position: absolute; bottom: -50px; left: -15px; 
-            color: #795548; font-weight: bold; font-size: 70px;
-            transform: rotate(180deg);
+            content: ''; 
+            position: absolute; 
+            bottom: -40px; 
+            left: -22px; 
+            width: 40px; 
+            height: 55px; 
+            border: 6px solid #795548; 
+            border-radius: 50%; /* This creates the actual loop/hole */
         }
 
-        /* The Tree */
+        /* The Tree - Shifted further left */
         #tree {
-            display: none; position: absolute; bottom: 15%; 
-            left: 38%; /* Adjusted to be clearly to the left of the cat */
-            width: 45px; height: 180px; background: #5d4037; z-index: 90;
+            display: none; 
+            position: absolute; 
+            bottom: 15%; 
+            left: 32%; /* Moved further left to avoid overlapping the cat */
+            width: 50px; 
+            height: 220px; 
+            background: #5d4037; 
+            z-index: 80;
         }
         #tree::after {
-            content: ''; position: absolute; top: -60px; left: -70px;
-            width: 180px; height: 120px; background: #2e7d32; border-radius: 50%;
+            content: ''; 
+            position: absolute; 
+            top: -70px; 
+            left: -80px;
+            width: 220px; 
+            height: 140px; 
+            background: #2e7d32; 
+            border-radius: 50%;
         }
 
         .flower { position: absolute; width: 15px; height: 30px; transform-origin: bottom center; animation: sway 3s infinite; }
@@ -127,7 +139,6 @@
 
     <script>
         const meadow = document.getElementById('meadow');
-        
         for (let i = 0; i < 100; i++) {
             const flower = document.createElement('div');
             flower.className = 'flower';
@@ -145,20 +156,19 @@
         }
 
         function handleNo() {
-            // Environment change
-            document.getElementById('sky').style.background = "#222";
-            document.getElementById('meadow').style.filter = "grayscale(100%) brightness(0.5)";
+            document.getElementById('sky').style.background = "#1a1a1a";
+            document.getElementById('meadow').style.filter = "grayscale(100%) brightness(0.4)";
             document.getElementById('rain').style.display = "block";
             document.getElementById('tree').style.display = "block";
             document.getElementById('sorrow-item').style.display = "block";
             
-            // Cat Sadness Transformation
-            document.documentElement.style.setProperty('--cat-color', '#444'); 
-            document.getElementById('catEyes').innerHTML = ">   <"; // Painful eyes
-            document.getElementById('catMouth').innerHTML = "∩"; // Frown
+            // Cat Transformation
+            document.documentElement.style.setProperty('--cat-color', '#333'); 
+            document.getElementById('catEyes').innerHTML = "×   ×"; // Dead/Sad eyes
+            document.getElementById('catMouth').innerHTML = "︿"; // Sad mouth
             document.getElementById('catMouth').style.top = "45px";
             
-            document.getElementById('msg').innerHTML = "Even the rope gave up on me...";
+            document.getElementById('msg').innerHTML = "Goodbye, cruel world...";
             document.getElementById('btns').style.display = "none";
         }
     </script>

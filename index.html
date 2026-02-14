@@ -83,18 +83,37 @@
     font-weight: bold;
 }
         /* The Rope Symbolism (Humorous) */
-        #sorrow-item {
-            display: none; position: absolute; right: -20px; top: -10px;
-            width: 5px; height: 50px; background: #795548; border-radius: 5px;
-        }
-        #sorrow-item::after {
-            content: 'O'; position: absolute; bottom: -10px; left: -5px; color: #795548; font-weight: bold; font-size: 40px;
-        }
+#sorrow-item {
+    display: none; 
+    position: absolute; 
+    right: -30px; /* Adjusted to keep it aligned with the bigger size */
+    top: -40px;   /* Lifted higher to accommodate the larger loop */
+    width: 10px;  /* Doubled thickness */
+    height: 80px; /* Made longer */
+    background: #795548; 
+    border-radius: 5px;
+}
+
+#sorrow-item::after {
+    content: 'O'; 
+    position: absolute; 
+    bottom: -25px; /* Adjusted for larger font */
+    left: -15px;  /* Centering the larger 'O' */
+    color: #795548; 
+    font-weight: bold; 
+    font-size: 80px; /* Doubled from 40px */
+}
 
         /* The Tree */
         #tree {
-            display: none; position: absolute; bottom: 15%; left: 35%;
-            width: 40px; height: 150px; background: #5d4037; z-index: 90;
+            display: none; 
+            position: absolute; 
+            bottom: 15%; 
+            left: 46%; /* Changed from 35% to be right behind/beside the cat */
+            width: 40px; 
+            height: 150px; 
+            background: #5d4037; 
+            z-index: 90;
         }
         #tree::after {
             content: ''; position: absolute; top: -50px; left: -60px;

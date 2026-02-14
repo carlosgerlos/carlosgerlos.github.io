@@ -1,22 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>For My Favorite Person</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine</title>
     <style>
-        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #ffebee; }
-        .container { margin-top: 100px; }
-        h1 { color: #d32f2f; }
-        .buttons { margin-top: 50px; }
-        button { padding: 15px 25px; font-size: 20px; cursor: pointer; border-radius: 10px; border: none; }
-        #yesBtn { background-color: #ff5252; color: white; }
+        :root {
+            --bg-color: #a8e6cf; /* Soft sky blue/green */
+            --flower-red: #ff5252;
+            --flower-yellow: #ffeb3b;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-color);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* The Meadow */
+        .meadow {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60vh;
+            background: linear-gradient(to bottom, #7bc67b 0%, #5ba45b 100%);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding-bottom: 20px;
+        }
+
+        /* Pixel Flower Styling */
+        .flower {
+            position: relative;
+            width: 20px;
+            height: 60px;
+            transform-origin: bottom center;
+            animation: sway 3s ease-in-out infinite;
+        }
+
+        .stem {
+            width: 4px;
+            height: 100%;
+            background-color: #2e7d32;
+            margin: 0 auto;
+        }
+
+        .petals {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--flower-red);
+            box-shadow: 
+                0 -8px 0 -2px var(--flower-red),
+                8px 0 0 -2px var(--flower-red),
+                -8px 0 0 -2px var(--flower-red),
+                0 8px 0 -2px var(--flower-red);
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background-color: gold;
+        }
+
+        /* Swaying Animation */
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Message Box */
+        .card {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -20%);
+            background: white;
+            padding: 30px;
+            border: 4px solid #333;
+            text-align: center;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        button {
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #a70000;
+        }
+
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #a70000;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Will you be my Valentine? ❤️</h1>
-        <div class="buttons">
-            <button id="yesBtn" onclick="alert('Yay! See you at 7! 😍')">YES</button>
-            </div>
+
+    <div class="card">
+        <h1>Will you be my Valentine?</h1>
+        <button onclick="alert('Yay! ❤️ Happy Valentines Day!')">YES!</button>
     </div>
+
+    <div class="meadow" id="meadow">
+        </div>
+
+    <script>
+        const meadow = document.getElementById('meadow');
+        const flowerCount = 30;
+
+        for (let i = 0; i < flowerCount; i++) {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            
+            // Randomize position and animation speed
+            const delay = Math.random() * 5;
+            const duration = 2 + Math.random() * 3;
+            const leftPos = Math.random() * 100;
+            const size = 0.5 + Math.random() * 1;
+
+            flower.style.animationDelay = `-${delay}s`;
+            flower.style.animationDuration = `${duration}s`;
+            flower.style.left = `${leftPos}%`;
+            flower.style.transform = `scale(${size})`;
+            
+            // Random color
+            if(Math.random() > 0.5) {
+                flower.style.setProperty('--flower-red', '#e91e63');
+            }
+
+            flower.innerHTML = `
+                <div class="petals"><div class="center"></div></div>
+                <div class="stem"></div>
+            `;
+            meadow.appendChild(flower);
+        }
+    </script>
 </body>
 </html>

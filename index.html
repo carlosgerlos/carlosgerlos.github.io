@@ -8,6 +8,7 @@
         :root {
             --bg-color: #a8e6cf; 
             --flower-red: #ff5252;
+            --cat-orange: #ffb74d;
         }
 
         body, html {
@@ -28,82 +29,100 @@
         /* The Deep Meadow */
         .meadow {
             position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 70vh; /* Taller meadow for depth */
+            bottom: 0; width: 100%; height: 75vh;
             background: linear-gradient(to bottom, #7bc67b 0%, #45a045 100%);
             overflow: hidden;
         }
 
-        /* Pixel Flower Styling */
-        .flower {
-            position: absolute;
-            width: 20px;
-            height: 40px;
-            transform-origin: bottom center;
-            animation: sway 3s ease-in-out infinite;
-        }
-
-        .stem {
-            width: 3px; height: 100%;
-            background-color: #2e7d32;
-            margin: 0 auto;
-        }
-
-        .petals {
-            position: absolute;
-            top: -12px; left: 50%;
-            transform: translateX(-50%);
-            width: 16px; height: 16px;
-            background: var(--flower-red);
-            box-shadow: 0 -6px 0 -2px var(--flower-red), 6px 0 0 -2px var(--flower-red), -6px 0 0 -2px var(--flower-red), 0 6px 0 -2px var(--flower-red);
-        }
-
-        .center {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 4px; height: 4px;
-            background-color: gold;
-        }
-
-        @keyframes sway {
-            0%, 100% { transform: rotate(-3deg) translateX(0); }
-            50% { transform: rotate(4deg) translateX(2px); }
-        }
-
-        /* The Cat */
-        .cat-container {
-            position: absolute;
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100; /* Keeps cat above background flowers */
-            text-align: center;
-        }
-
-        .cat-img {
-            width: 200px; /* Adjust based on your preference */
-            filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.1));
-        }
-
-        /* Message Box */
+        /* Prettier Message Box (Scalloped Border) */
         .card {
             position: absolute;
-            top: 10%; left: 50%;
+            top: 15%; left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border: 4px solid #333;
+            background: white;
+            padding: 40px;
             text-align: center;
             z-index: 200;
-            box-shadow: 8px 8px 0px #ff8a8a;
+            border: 6px solid #ff5252;
+            border-radius: 30px;
+            /* Creating a "bubbly" feel like your picture */
+            outline: 6px dashed white;
+            outline-offset: -15px;
+            box-shadow: 0 10px 0px rgba(0,0,0,0.1);
+        }
+
+        .card h1 {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
         }
 
         button {
             background: #ff5252; color: white;
-            border: none; padding: 10px 25px;
-            font-size: 1.2rem; cursor: pointer;
-            box-shadow: 4px 4px 0px #a70000;
+            border: none; padding: 12px 30px;
+            font-size: 1.5rem; cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 5px 0px #a70000;
+            transition: 0.1s;
+        }
+
+        button:hover { transform: scale(1.05); }
+        button:active { transform: translateY(3px); box-shadow: 0 2px 0px #a70000; }
+
+        /* Simple Pixel Cat CSS */
+        .cat {
+            position: absolute;
+            bottom: 15%; left: 50%;
+            transform: translateX(-50%);
+            width: 80px; height: 80px;
+            background: var(--cat-orange);
+            border-radius: 20px 20px 5px 5px;
+            z-index: 100;
+            border: 3px solid #333;
+        }
+        /* Ears */
+        .cat::before {
+            content: '';
+            position: absolute; top: -15px; left: 0;
+            width: 0; height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 20px solid var(--cat-orange);
+            filter: drop-shadow(45px 0 0 var(--cat-orange));
+        }
+        /* Eyes & Face */
+        .face::after {
+            content: '• •';
+            position: absolute; top: 20px; left: 20px;
+            font-size: 30px; color: #333; letter-spacing: 5px;
+        }
+
+        /* Flower Bouquet for Cat */
+        .bouquet {
+            position: absolute; top: 40px; left: 20px;
+            width: 40px; height: 40px;
+            background: #ff5252;
+            border-radius: 50%;
+            box-shadow: 10px -5px 0 yellow, -5px -5px 0 white;
+            z-index: 101;
+        }
+
+        /* Pixel Flowers */
+        .flower {
+            position: absolute; width: 15px; height: 30px;
+            transform-origin: bottom center;
+            animation: sway 3s ease-in-out infinite;
+        }
+        .stem { width: 3px; height: 100%; background: #2e7d32; margin: 0 auto; }
+        .petals {
+            position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 12px; background: var(--flower-red);
+            box-shadow: 0 -5px 0 -1px var(--flower-red), 5px 0 0 -1px var(--flower-red), -5px 0 0 -1px var(--flower-red), 0 5px 0 -1px var(--flower-red);
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(4deg); }
         }
     </style>
 </head>
@@ -116,44 +135,34 @@
         <button onclick="alert('❤️ She said yes! ❤️')">YES!</button>
     </div>
 
-    <div class="meadow" id="meadow">
-        </div>
+    <div class="meadow" id="meadow"></div>
 
-    <div class="cat-container">
-        <img src="https://picsum.photos/seed/pixelcat/200" alt="Cute Pixel Cat" class="cat-img">
+    <div class="cat">
+        <div class="face"></div>
+        <div class="bouquet"></div>
     </div>
 
     <script>
         const meadow = document.getElementById('meadow');
-        const flowerCount = 150; // Increased significantly
+        const flowerCount = 200; // Tons of flowers!
 
         for (let i = 0; i < flowerCount; i++) {
             const flower = document.createElement('div');
             flower.className = 'flower';
-            
-            // Randomize everything for a natural look
-            const delay = Math.random() * 5;
-            const duration = 2 + Math.random() * 3;
-            const leftPos = Math.random() * 105 - 2; // Slight overflow to cover edges
-            const bottomPos = Math.random() * 100; // Vertical spread
-            const size = 0.4 + (bottomPos / 100); // Flowers in front (higher bottomPos) are larger
+            const leftPos = Math.random() * 100;
+            const bottomPos = Math.random() * 100;
+            const size = 0.4 + (bottomPos / 100);
 
-            flower.style.animationDelay = `-${delay}s`;
-            flower.style.animationDuration = `${duration}s`;
             flower.style.left = `${leftPos}%`;
             flower.style.bottom = `${bottomPos}%`;
+            flower.style.animationDelay = `-${Math.random() * 5}s`;
             flower.style.zIndex = Math.floor(bottomPos);
             flower.style.transform = `scale(${size})`;
             
-            // Varied colors
-            const colors = ['#ff5252', '#ff4081', '#e040fb', '#ffffff', '#ffeb3b'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            flower.style.setProperty('--flower-red', randomColor);
+            const colors = ['#ff5252', '#ff4081', '#ffffff', '#ffeb3b', '#ff9800'];
+            flower.style.setProperty('--flower-red', colors[Math.floor(Math.random() * colors.length)]);
 
-            flower.innerHTML = `
-                <div class="petals"><div class="center"></div></div>
-                <div class="stem"></div>
-            `;
+            flower.innerHTML = `<div class="petals"></div><div class="stem"></div>`;
             meadow.appendChild(flower);
         }
     </script>

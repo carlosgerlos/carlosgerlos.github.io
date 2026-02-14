@@ -6,144 +6,149 @@
     <title>For My Valentine</title>
     <style>
         :root {
-            --bg-color: #a8e6cf; /* Soft sky blue/green */
+            --bg-color: #a8e6cf; 
             --flower-red: #ff5252;
-            --flower-yellow: #ffeb3b;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
             overflow: hidden;
             background-color: var(--bg-color);
             font-family: 'Courier New', Courier, monospace;
         }
 
-        /* The Meadow */
+        /* Sky Styling */
+        .sky {
+            position: absolute;
+            top: 0; width: 100%; height: 40vh;
+            background: linear-gradient(to bottom, #87ceeb, #a8e6cf);
+        }
+
+        /* The Deep Meadow */
         .meadow {
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 60vh;
-            background: linear-gradient(to bottom, #7bc67b 0%, #5ba45b 100%);
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            padding-bottom: 20px;
+            height: 70vh; /* Taller meadow for depth */
+            background: linear-gradient(to bottom, #7bc67b 0%, #45a045 100%);
+            overflow: hidden;
         }
 
         /* Pixel Flower Styling */
         .flower {
-            position: relative;
+            position: absolute;
             width: 20px;
-            height: 60px;
+            height: 40px;
             transform-origin: bottom center;
             animation: sway 3s ease-in-out infinite;
         }
 
         .stem {
-            width: 4px;
-            height: 100%;
+            width: 3px; height: 100%;
             background-color: #2e7d32;
             margin: 0 auto;
         }
 
         .petals {
             position: absolute;
-            top: -15px;
-            left: 50%;
+            top: -12px; left: 50%;
             transform: translateX(-50%);
-            width: 20px;
-            height: 20px;
+            width: 16px; height: 16px;
             background: var(--flower-red);
-            box-shadow: 
-                0 -8px 0 -2px var(--flower-red),
-                8px 0 0 -2px var(--flower-red),
-                -8px 0 0 -2px var(--flower-red),
-                0 8px 0 -2px var(--flower-red);
+            box-shadow: 0 -6px 0 -2px var(--flower-red), 6px 0 0 -2px var(--flower-red), -6px 0 0 -2px var(--flower-red), 0 6px 0 -2px var(--flower-red);
         }
 
         .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 6px;
-            height: 6px;
+            width: 4px; height: 4px;
             background-color: gold;
         }
 
-        /* Swaying Animation */
         @keyframes sway {
-            0%, 100% { transform: rotate(-2deg); }
-            50% { transform: rotate(5deg); }
+            0%, 100% { transform: rotate(-3deg) translateX(0); }
+            50% { transform: rotate(4deg) translateX(2px); }
+        }
+
+        /* The Cat */
+        .cat-container {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100; /* Keeps cat above background flowers */
+            text-align: center;
+        }
+
+        .cat-img {
+            width: 200px; /* Adjust based on your preference */
+            filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.1));
         }
 
         /* Message Box */
         .card {
             position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -20%);
-            background: white;
-            padding: 30px;
+            top: 10%; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
             border: 4px solid #333;
             text-align: center;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
-            z-index: 10;
+            z-index: 200;
+            box-shadow: 8px 8px 0px #ff8a8a;
         }
 
         button {
-            background: #ff5252;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
+            background: #ff5252; color: white;
+            border: none; padding: 10px 25px;
+            font-size: 1.2rem; cursor: pointer;
             box-shadow: 4px 4px 0px #a70000;
-        }
-
-        button:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #a70000;
         }
     </style>
 </head>
 <body>
 
+    <div class="sky"></div>
+
     <div class="card">
         <h1>Will you be my Valentine?</h1>
-        <button onclick="alert('Yay! ❤️ Happy Valentines Day!')">YES!</button>
+        <button onclick="alert('❤️ She said yes! ❤️')">YES!</button>
     </div>
 
     <div class="meadow" id="meadow">
         </div>
 
+    <div class="cat-container">
+        <img src="https://picsum.photos/seed/pixelcat/200" alt="Cute Pixel Cat" class="cat-img">
+    </div>
+
     <script>
         const meadow = document.getElementById('meadow');
-        const flowerCount = 30;
+        const flowerCount = 150; // Increased significantly
 
         for (let i = 0; i < flowerCount; i++) {
             const flower = document.createElement('div');
             flower.className = 'flower';
             
-            // Randomize position and animation speed
+            // Randomize everything for a natural look
             const delay = Math.random() * 5;
             const duration = 2 + Math.random() * 3;
-            const leftPos = Math.random() * 100;
-            const size = 0.5 + Math.random() * 1;
+            const leftPos = Math.random() * 105 - 2; // Slight overflow to cover edges
+            const bottomPos = Math.random() * 100; // Vertical spread
+            const size = 0.4 + (bottomPos / 100); // Flowers in front (higher bottomPos) are larger
 
             flower.style.animationDelay = `-${delay}s`;
             flower.style.animationDuration = `${duration}s`;
             flower.style.left = `${leftPos}%`;
+            flower.style.bottom = `${bottomPos}%`;
+            flower.style.zIndex = Math.floor(bottomPos);
             flower.style.transform = `scale(${size})`;
             
-            // Random color
-            if(Math.random() > 0.5) {
-                flower.style.setProperty('--flower-red', '#e91e63');
-            }
+            // Varied colors
+            const colors = ['#ff5252', '#ff4081', '#e040fb', '#ffffff', '#ffeb3b'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            flower.style.setProperty('--flower-red', randomColor);
 
             flower.innerHTML = `
                 <div class="petals"><div class="center"></div></div>

@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-color: #a8e6cf; 
-            --cat-orange: #ffb74d;
+            --cat-color: #ffb74d; /* Using a variable for easy JS switching */
         }
 
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Courier New', monospace; }
@@ -31,93 +31,66 @@
         #noBtn { background: #999; color: white; }
 
         /* The Cat */
-/* Improved Cat Styling */
-.cat {
-    position: absolute; 
-    bottom: 15%; 
-    left: 50%; 
-    transform: translateX(-50%);
-    width: 100px; 
-    height: 90px; 
-    background: var(--cat-orange);
-    border-radius: 40px 40px 10px 10px; /* Rounder top for a head/body combo */
-    z-index: 100; 
-    border: 3px solid #333; 
-    transition: 1s;
-}
+        .cat {
+            position: absolute; 
+            bottom: 15%; 
+            left: 50%; 
+            transform: translateX(-50%);
+            width: 100px; 
+            height: 90px; 
+            background: var(--cat-color);
+            border-radius: 40px 40px 10px 10px;
+            z-index: 100; 
+            border: 3px solid #333; 
+            transition: 1s;
+        }
 
-/* Ears */
-.cat::before, .cat::after {
-    content: ''; 
-    position: absolute; 
-    top: -15px;
-    width: 0; 
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 25px solid var(--cat-orange);
-}
-.cat::before { left: 5px; transform: rotate(-10deg); }
-.cat::after { right: 5px; transform: rotate(10deg); }
+        .cat::before, .cat::after {
+            content: ''; 
+            position: absolute; 
+            top: -15px;
+            width: 0; 
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid var(--cat-color);
+        }
+        .cat::before { left: 5px; transform: rotate(-10deg); }
+        .cat::after { right: 5px; transform: rotate(10deg); }
 
-/* Eyes and Face */
-.face::after { 
-    content: 'v'; /* A cute mouth */
-    position: absolute; 
-    top: 35px; 
-    left: 0; 
-    width: 100%;
-    text-align: center;
-    font-size: 20px; 
-    color: #333; 
-}
-.face::before {
-    content: '•   •'; /* Spaced out eyes */
-    position: absolute; 
-    top: 20px; 
-    left: 0; 
-    width: 100%;
-    text-align: center;
-    font-size: 30px; 
-    color: #333; 
-    font-weight: bold;
-}
-        /* The Rope Symbolism (Humorous) */
-#sorrow-item {
-    display: none; 
-    position: absolute; 
-    right: -30px; /* Adjusted to keep it aligned with the bigger size */
-    top: -40px;   /* Lifted higher to accommodate the larger loop */
-    width: 10px;  /* Doubled thickness */
-    height: 80px; /* Made longer */
-    background: #795548; 
-    border-radius: 5px;
-}
+        /* Face Container */
+        #face-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #333;
+        }
+        .eyes { position: absolute; top: 20px; width: 100%; font-size: 30px; font-weight: bold; }
+        .mouth { position: absolute; top: 35px; width: 100%; font-size: 20px; }
 
-#sorrow-item::after {
-    content: 'O'; 
-    position: absolute; 
-    bottom: -25px; /* Adjusted for larger font */
-    left: -15px;  /* Centering the larger 'O' */
-    color: #795548; 
-    font-weight: bold; 
-    font-size: 80px; /* Doubled from 40px */
-}
+        /* The Broken Rope */
+        #sorrow-item {
+            display: none; position: absolute; right: -40px; top: -60px;
+            width: 8px; height: 40px; background: #795548; border-radius: 5px;
+            transform: rotate(15deg);
+        }
+        #sorrow-item::after {
+            content: 'U'; /* Broken loop looks like a U */
+            position: absolute; bottom: -50px; left: -15px; 
+            color: #795548; font-weight: bold; font-size: 70px;
+            transform: rotate(180deg);
+        }
 
         /* The Tree */
         #tree {
-            display: none; 
-            position: absolute; 
-            bottom: 15%; 
-            left: 46%; /* Changed from 35% to be right behind/beside the cat */
-            width: 40px; 
-            height: 150px; 
-            background: #5d4037; 
-            z-index: 90;
+            display: none; position: absolute; bottom: 15%; 
+            left: 38%; /* Adjusted to be clearly to the left of the cat */
+            width: 45px; height: 180px; background: #5d4037; z-index: 90;
         }
         #tree::after {
-            content: ''; position: absolute; top: -50px; left: -60px;
-            width: 160px; height: 100px; background: #2e7d32; border-radius: 50%;
+            content: ''; position: absolute; top: -60px; left: -70px;
+            width: 180px; height: 120px; background: #2e7d32; border-radius: 50%;
         }
 
         .flower { position: absolute; width: 15px; height: 30px; transform-origin: bottom center; animation: sway 3s infinite; }
@@ -141,7 +114,10 @@
 
     <div id="tree"></div>
     <div class="cat" id="cat">
-        <div class="face"></div>
+        <div id="face-content">
+            <div class="eyes" id="catEyes">•   •</div>
+            <div class="mouth" id="catMouth">v</div>
+        </div>
         <div id="sorrow-item"></div>
     </div>
 
@@ -152,7 +128,6 @@
     <script>
         const meadow = document.getElementById('meadow');
         
-        // Generate Flowers
         for (let i = 0; i < 100; i++) {
             const flower = document.createElement('div');
             flower.className = 'flower';
@@ -169,20 +144,23 @@
             document.getElementById('btns').style.display = "none";
         }
 
-function handleNo() {
-    // ... your existing code ...
-    document.getElementById('sky').style.background = "#222";
-    document.getElementById('meadow').style.filter = "grayscale(100%)";
-    document.getElementById('rain').style.display = "block";
-    document.getElementById('tree').style.display = "block";
-    document.getElementById('sorrow-item').style.display = "block";
-    document.getElementById('msg').innerHTML = "End of the road...";
-    document.getElementById('btns').style.display = "none";
-
-    // FIX FOR THE EARS:
-    document.getElementById('cat').style.background = "#555";
-    document.documentElement.style.setProperty('--cat-orange', '#555'); 
-}
+        function handleNo() {
+            // Environment change
+            document.getElementById('sky').style.background = "#222";
+            document.getElementById('meadow').style.filter = "grayscale(100%) brightness(0.5)";
+            document.getElementById('rain').style.display = "block";
+            document.getElementById('tree').style.display = "block";
+            document.getElementById('sorrow-item').style.display = "block";
+            
+            // Cat Sadness Transformation
+            document.documentElement.style.setProperty('--cat-color', '#444'); 
+            document.getElementById('catEyes').innerHTML = ">   <"; // Painful eyes
+            document.getElementById('catMouth').innerHTML = "∩"; // Frown
+            document.getElementById('catMouth').style.top = "45px";
+            
+            document.getElementById('msg').innerHTML = "Even the rope gave up on me...";
+            document.getElementById('btns').style.display = "none";
+        }
     </script>
 </body>
 </html>
